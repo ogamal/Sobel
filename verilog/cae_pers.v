@@ -279,7 +279,7 @@ initial $display("starting cae personality aeid:%d\n", i_aeid);
       r_ret_data   <= w_aeg[inst_aeg_idx[NB-1:0]];
       r_err_aegidx <= (inst_aeg_wr || inst_aeg_rd) && !c_val_aegidx;
 //TODO: add logic to decide which instructions are implemented
-      r_err_unimpl <= err_unimpl || (inst_val && (inst_caep !== 'd0/* && inst_caep !== 'd1 && inst_caep !== 'd2*/));
+      r_err_unimpl <= err_unimpl || (inst_val && (inst_caep !== 'd0  && inst_caep !== 'd1 /* && inst_caep !== 'd1 && inst_caep !== 'd2*/));
    end
    assign cae_ret_data_vld = r_ret_val;
    assign cae_ret_data     = r_ret_data;

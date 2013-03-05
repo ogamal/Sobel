@@ -2,7 +2,8 @@
 ###	Sobel Edge Detection     ###
 ###	      CPRE 584           ###
 ###	     Team Cyc05          ###
-#################################### 
+####################################
+
 	.file	"cpfilter.s"
 	.ctext
 
@@ -30,4 +31,4 @@ cpSB:
 	CAEP01.AE0 $0		# Custom Call #2
 	RTN
 	
-	.end
+	.cend

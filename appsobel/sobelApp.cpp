@@ -191,7 +191,7 @@ bool writeToFile(unsigned char *input, int width, int length, int size){
 		fprintf(outImage,"%d\n%d\n%d\n",input[i],input[i],input[i]);
 	}
 		
-        fclose(outImage);
-        return true;
+	fclose(outImage);
+	return true;
 }
 

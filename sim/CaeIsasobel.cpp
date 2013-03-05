@@ -24,9 +24,10 @@ void
 CCaeIsa::CaepInst(int aeId, int opcode, int immed, uint32 inst, uint64 scalar) // F7,0,20-3F
 {
     switch (opcode) {
-        case 0x20: 
-            cout << "Hello World from emulated ae" << aeId << endl;
-	        break;
+        case 0x20:
+	        	break;
+	       case 0x21:
+		        break;
 	    default:
 	        printf("Default case hit - opcode = %x\n", opcode);
 	        for (int aeId = 0; aeId < CAE_AE_CNT; aeId += 1)
