@@ -251,8 +251,8 @@ architecture Behavioral of grayscale_ctrl is
 	signal node_enable	: std_logic_vector (15 downto 0);
 	signal node_done		: std_logic_vector (15 downto 0);
 	signal single_wr		: std_logic_vector (15 downto 0);
-	signal rd_addr			: std_logic_vector (63 downto 0);
-	signal wr_addr			: std_logic_vector (63 downto 0);
+	signal rd_addr			: std_logic_vector (63 downto 0) := (others => '0');
+	signal wr_addr			: std_logic_vector (63 downto 0) := (others => '0');
 	signal rd_count			: std_logic_vector (63 downto 0);
 	signal wr_count			: std_logic_vector (63 downto 0);
 	signal total_size		: std_logic_vector (63 downto 0);

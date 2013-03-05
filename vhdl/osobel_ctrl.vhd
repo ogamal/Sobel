@@ -298,8 +298,8 @@ architecture Behavioral of osobel_ctrl is
 	end component;
 
 	signal count		 		: std_logic_vector (63 downto 0);
-	signal rd_addr	 		: std_logic_vector (63 downto 0);
-	signal wr_addr	 		: std_logic_vector (63 downto 0);
+	signal rd_addr	 		: std_logic_vector (63 downto 0) := (others => '0');
+	signal wr_addr	 		: std_logic_vector (63 downto 0) := (others => '0');
 
 	signal node_idle		: std_logic_vector (7 downto 0);
 	signal node_enable	: std_logic_vector (7 downto 0);

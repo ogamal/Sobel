@@ -100,9 +100,9 @@ architecture Behavioral of osobel_node is
 	signal fifo1_empty				: std_logic;
 	
 	type pxl_arry is array (0 to 7) of std_logic_vector(7 downto 0);
-	signal pxl_in_0			: pxl_arry;		-- previous pixels
-	signal pxl_in_1			: pxl_arry;		-- current pixels we are processing
-	signal pxl_in_2			: pxl_arry;		-- next pixels to process
+	signal pxl_in_0			: pxl_arry := (others => (others => '0'));		-- previous pixels
+	signal pxl_in_1			: pxl_arry := (others => (others => '0'));		-- current pixels we are processing
+	signal pxl_in_2			: pxl_arry := (others => (others => '0'));		-- next pixels to process
 	signal pxl_out			: pxl_arry;
 
 	type sum_arry is array (1 to 6) of std_logic_vector(7 downto 0);

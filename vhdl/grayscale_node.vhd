@@ -41,17 +41,17 @@ architecture Behavioral of grayscale_node is
 	signal req_st_addr	: std_logic_vector (63 downto 0);
 	signal req_tag	: std_logic_vector (7 downto 0);
 
-	signal red1			: std_logic_vector (8 downto 0);
-	signal red2			: std_logic_vector (8 downto 0);
-	signal green1		: std_logic_vector (8 downto 0);
-	signal green2		: std_logic_vector (8 downto 0);
-	signal blue1		: std_logic_vector (8 downto 0);
-	signal blue2		: std_logic_vector (8 downto 0);
+	signal red1			: std_logic_vector (8 downto 0) := (others => '0');
+	signal red2			: std_logic_vector (8 downto 0) := (others => '0');
+	signal green1		: std_logic_vector (8 downto 0) := (others => '0');
+	signal green2		: std_logic_vector (8 downto 0) := (others => '0');
+	signal blue1		: std_logic_vector (8 downto 0) := (others => '0');
+	signal blue2		: std_logic_vector (8 downto 0) := (others => '0');
+	signal black1		: std_logic_vector (19 downto 0);
+	signal black2		: std_logic_vector (19 downto 0);
 
 	type state_type is (idl, strt, s1, s2, s3, s4, s5, s6);
 	signal state		: state_type;
-	signal black1		: std_logic_vector (19 downto 0);
-	signal black2		: std_logic_vector (19 downto 0);
 
 begin
 	mc_req_flush <=  '0'; -- write flush isn't used in this design
