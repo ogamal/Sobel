@@ -15,7 +15,7 @@ using namespace std;
 
 typedef unsigned long long uint64;
 
-bool writeToFile(unsigned char *input, int width, int length, int size);
+bool writeToFile(char *outFilePath, unsigned char *input, int width, int length, int size);
 bool readFromFile(unsigned long long **input_pixels, int* width, int* length, int* size);
 
 extern "C" void cpGS();
@@ -90,6 +90,10 @@ int main(int argc, char *argv[])
 	cout << "CySobel: Calling the grayscale custom instruction" << endl;
  	copcall_fmt(sig, cpGS, "AAAA", input_pixels, gray_pixels, (uint64) width, (uint64) length);
 	cout << "CySobel: Back from the grayscale custom instruction!" << endl;
+
+	cout << "CySobel: Writing grayscaled image" << endl;
+	error = !writeToFile("./pics/tmp.ppm", gray_pixels, width, length, totalPixels);
+	if(error) exit(1);
 	
 	// Sobel Edge Detecting
 	cout << "CySobel: Calling the sobel custom instruction" << endl;
@@ -97,7 +101,7 @@ int main(int argc, char *argv[])
 	cout << "CySobel: Back from the sobel custom instruction!" << endl;
 
 	cout << "CySobel: Writing output image" << endl;
-	error = !writeToFile(output_pixels, width, length, totalPixels);
+	error = !writeToFile(outFilePath, output_pixels, width, length, totalPixels);
 	if(error) exit(1);
 	cout << "CySobel: Program Done!" << endl;
 		
@@ -175,7 +179,7 @@ bool readFromFile(unsigned long long **in_pixels, int* width, int* length, int* 
 	return true;
 }
 
-bool writeToFile(unsigned char *input, int width, int length, int size){
+bool writeToFile(char *outFilePath, unsigned char *input, int width, int length, int size){
 	FILE *outImage;
 	outImage = fopen(outFilePath,"w");
 	if(outImage == NULL){

@@ -9,16 +9,16 @@ use IEEE.math_real.all;
 entity grayscale_ctrl is
 	port (
 		-- control signals
-		clk						 				: in std_logic;
-		reset					 				: in std_logic;
-		enable				 				: in std_logic;
-		idle					 				: out std_logic;	-- 0 processing, 1 otherwise
-		done					 				: out std_logic;	-- 1 done processing, 0 other
+		clk									: in std_logic;
+		reset								: in std_logic;
+		enable							: in std_logic;
+		idle								: out std_logic;	-- 0 processing, 1 otherwise
+		done								: out std_logic;	-- 1 done processing, 0 other
 		-- parameters
-		in_addr					 			: in std_logic_vector (63 downto 0);
-		out_addr				 			: in std_logic_vector (63 downto 0);
-		img_rows				 			: in std_logic_vector (63 downto 0);
-		img_cols				 			: in std_logic_vector (63 downto 0);
+		in_addr							: in std_logic_vector (63 downto 0);
+		out_addr						: in std_logic_vector (63 downto 0);
+		img_rows						: in std_logic_vector (63 downto 0);
+		img_cols						: in std_logic_vector (63 downto 0);
 		-- MC0 even request port signals
 		mc0_req_ld_e					: out std_logic;
 		mc0_req_st_e					: out std_logic;
@@ -251,8 +251,8 @@ architecture Behavioral of grayscale_ctrl is
 	signal node_enable	: std_logic_vector (15 downto 0);
 	signal node_done		: std_logic_vector (15 downto 0);
 	signal single_wr		: std_logic_vector (15 downto 0);
-	signal rd_addr			: std_logic_vector (63 downto 0) := (others => '0');
-	signal wr_addr			: std_logic_vector (63 downto 0) := (others => '0');
+	signal rd_addr			: std_logic_vector (63 downto 0);
+	signal wr_addr			: std_logic_vector (63 downto 0);
 	signal rd_count			: std_logic_vector (63 downto 0);
 	signal wr_count			: std_logic_vector (63 downto 0);
 	signal total_size		: std_logic_vector (63 downto 0);
@@ -711,8 +711,6 @@ begin
 				rd_count <= (others => '0');
 				wr_count <= (others => '0');
 				node_enable <= (others => '0');
-				rd_count <= (others => '0');
-				wr_count <= (others => '0');
 			else
 				case state is
 					when idl =>

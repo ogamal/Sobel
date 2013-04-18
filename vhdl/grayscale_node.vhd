@@ -40,18 +40,18 @@ architecture Behavioral of grayscale_node is
 	signal req_ld_addr	: std_logic_vector (63 downto 0);
 	signal req_st_addr	: std_logic_vector (63 downto 0);
 	signal req_tag	: std_logic_vector (7 downto 0);
-
-	signal red1			: std_logic_vector (8 downto 0) := (others => '0');
-	signal red2			: std_logic_vector (8 downto 0) := (others => '0');
-	signal green1		: std_logic_vector (8 downto 0) := (others => '0');
-	signal green2		: std_logic_vector (8 downto 0) := (others => '0');
-	signal blue1		: std_logic_vector (8 downto 0) := (others => '0');
-	signal blue2		: std_logic_vector (8 downto 0) := (others => '0');
-	signal black1		: std_logic_vector (19 downto 0);
-	signal black2		: std_logic_vector (19 downto 0);
+	
+	signal red1			: std_logic_vector (8 downto 0);
+	signal red2			: std_logic_vector (8 downto 0);
+	signal green1		: std_logic_vector (8 downto 0);
+	signal green2		: std_logic_vector (8 downto 0);
+	signal blue1		: std_logic_vector (8 downto 0);
+	signal blue2		: std_logic_vector (8 downto 0);
 
 	type state_type is (idl, strt, s1, s2, s3, s4, s5, s6);
 	signal state		: state_type;
+	signal black1		: std_logic_vector (19 downto 0);
+	signal black2		: std_logic_vector (19 downto 0);
 
 begin
 	mc_req_flush <=  '0'; -- write flush isn't used in this design
@@ -59,7 +59,7 @@ begin
 
 	black1 <= x"12B"*red1(7 downto 0) + x"24B"*green1(7 downto 0) + x"72"*blue1(7 downto 0);
 	black2 <= x"12B"*red2(7 downto 0) + x"24B"*green2(7 downto 0) + x"72"*blue2(7 downto 0);
-
+	
 	process (clk)
 	begin
 		if rising_edge(clk) then
@@ -131,19 +131,19 @@ begin
 							mc_req_wrd_rdctl(23 downto 16) <= black1(17 downto 10);
 							mc_req_wrd_rdctl(15 downto 08) <= black1(17 downto 10);
 							mc_req_wrd_rdctl(07 downto 00) <= black1(17 downto 10);
+							state <= s3;
+						end if;
+					when s3 =>		-- wait to store
+						mc_req_st <= '0';
+						mc_req_vadr <= (others => '0');
+						mc_req_wrd_rdctl <= (others => '0');
+						-- if single write finish
+						if single_write = '1' then
+							state <= s5;
+						else
 							state <= s4;
 						end if;
-					-- when s3 =>		-- wait to store
-					-- 	mc_req_st <= '0';
-					-- 	mc_req_vadr <= (others => '0');
-					-- 	mc_req_wrd_rdctl <= (others => '0');
-					-- 	-- if single write finish
-					-- 	if single_write = '1' then
-					-- 		state <= s5;
-					-- 	else
-					-- 		state <= s4;
-					-- 	end if;
-					when s3 =>		-- store the second grayscaled color
+					when s4 =>		-- store the second grayscaled color
 						if mc_wr_rq_stall = '0' then
 							mc_req_st <= '1';
 							mc_req_size <= "00";	-- write just 8 bits
