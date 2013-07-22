@@ -302,8 +302,8 @@ initial $display("starting cae personality aeid:%d\n", i_aeid);
 	 	r_caep00 <= c_caep00;
 		r_caep01 <= c_caep01;
 	 end
-	 assign cae_idle = !r_caep00 && gs_idle && sb_idle;
-	 assign cae_stall = c_caep00 || r_caep00 || !gs_idle || !sb_idle;
+	 assign cae_idle = !r_caep00 && !r_caep01 && gs_idle && sb_idle;
+	 assign cae_stall = c_caep00 || c_caep01 || r_caep00 || r_caep01 || !gs_idle || !sb_idle;
 
 
 	//
